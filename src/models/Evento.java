@@ -1,19 +1,16 @@
 package models;
 
-import java.sql.Date;
-import java.sql.Time;
-
 public class Evento {
     private int id;
     private String nombre;
     private String descripcion;
-    private Date fecha;
-    private Time hora;
+    private String fecha;
+    private String hora;
     private String categoria;
     private int precio;
     private int cupos;
 
-    public Evento(int id, String nombre, Date fecha, Time hora, String categoria, int precio, int cupos) {
+    public Evento(int id, String nombre, String fecha, String hora, String categoria, int precio, int cupos) {
         this.id = id;
         this.nombre = nombre;
         this.fecha = fecha;
@@ -31,11 +28,11 @@ public class Evento {
         return nombre;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
