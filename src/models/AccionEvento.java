@@ -28,25 +28,28 @@ public class AccionEvento {
         }
     }
 
-    public void mostrarEventos() {
+    public List<Evento> obtenerEventos() {
         String sql = "SELECT * FROM eventos";
+        List<Evento> eventos = new ArrayList<>();
         try (Connection conn = conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                System.out.println("ID: " + rs.getInt("id"));
-                System.out.println("Nombre: " + rs.getString("nombre"));
-                System.out.println("Descripcion: " + rs.getString("descripcion"));
-                System.out.println("Fecha: " + rs.getDate("fecha"));
-                System.out.println("Hora: " + rs.getTime("hora"));
-                System.out.println("Categoria: " + rs.getString("categoria"));
-                System.out.println("Precio: " + rs.getInt("precio"));
-                System.out.println("Cupos: " + rs.getInt("cupos"));
-                System.out.println("---------------------------");
+                Evento evento = new Evento(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getDate("fecha").toLocalDate(),
+                        rs.getTime("hora").toLocalTime(),
+                        rs.getString("categoria"),
+                        rs.getInt("precio"),
+                        rs.getInt("cupos")
+                );
+                eventos.add(evento);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return eventos;
     }
 
     public void eliminarEvento(int id) {
