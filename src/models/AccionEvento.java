@@ -1,6 +1,8 @@
 package models;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccionEvento {
     private final String URL = "jdbc:mysql://localhost:3306/tarea1";
@@ -17,8 +19,8 @@ public class AccionEvento {
             pstmt.setInt(1, evento.getId());
             pstmt.setString(2, evento.getNombre());
             pstmt.setString(3, evento.getDescripcion());
-            pstmt.setDate(4, Date.valueOf(evento.getFecha()));
-            pstmt.setTime(5, Time.valueOf(evento.getHora()));
+            pstmt.setDate(4, new java.sql.Date(evento.getFecha().getTime()));
+            pstmt.setTime(5, new java.sql.Time(evento.getHora().getTime()));
             pstmt.setString(6, evento.getCategoria());
             pstmt.setInt(7, evento.getPrecio());
             pstmt.setInt(8, evento.getCupos());
@@ -38,12 +40,11 @@ public class AccionEvento {
                 Evento evento = new Evento(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        rs.getDate("fecha").toLocalDate(),
-                        rs.getTime("hora").toLocalTime(),
+                        rs.getDate("fecha"),
+                        rs.getTime("hora"),
                         rs.getString("categoria"),
                         rs.getInt("precio"),
-                        rs.getInt("cupos")
-                );
+                        rs.getInt("cupos"));
                 eventos.add(evento);
             }
         } catch (SQLException e) {
@@ -67,8 +68,8 @@ public class AccionEvento {
         try (Connection conn = conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, evento.getNombre());
             pstmt.setString(2, evento.getDescripcion());
-            pstmt.setDate(3, Date.valueOf(evento.getFecha()));
-            pstmt.setTime(4, Time.valueOf(evento.getHora()));
+            pstmt.setDate(3, evento.getFecha());
+            pstmt.setTime(4, evento.getHora());
             pstmt.setString(5, evento.getCategoria());
             pstmt.setInt(6, evento.getPrecio());
             pstmt.setInt(7, evento.getCupos());
