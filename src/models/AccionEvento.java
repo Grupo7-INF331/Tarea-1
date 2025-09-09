@@ -1,6 +1,8 @@
 package models;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +15,25 @@ public class AccionEvento {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public void insertarEvento(Evento evento) {
-        String sql = "INSERT INTO eventos (id, nombre, descripcion, fecha, hora, categoria, precio, cupos) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public void insertarEvento(Evento evento) throws ParseException {
+        String sql = "INSERT INTO eventos (nombre, descripcion, fecha, hora, categoria, precio, cupos) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, evento.getId());
-            pstmt.setString(2, evento.getNombre());
-            pstmt.setString(3, evento.getDescripcion());
-            pstmt.setDate(4, new java.sql.Date(evento.getFecha().getTime()));
-            pstmt.setTime(5, new java.sql.Time(evento.getHora().getTime()));
-            pstmt.setString(6, evento.getCategoria());
-            pstmt.setInt(7, evento.getPrecio());
-            pstmt.setInt(8, evento.getCupos());
+
+            SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");
+            java.util.Date date = sdfDate.parse(evento.getFecha());
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+            SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
+            java.util.Date time = sdfTime.parse(evento.getHora());
+            java.sql.Time sqlTime = new java.sql.Time(time.getTime());
+
+            pstmt.setString(1, evento.getNombre());
+            pstmt.setString(2, evento.getDescripcion());
+            pstmt.setDate(3, sqlDate);
+            pstmt.setTime(4, sqlTime);
+            pstmt.setString(5, evento.getCategoria());
+            pstmt.setInt(6, evento.getPrecio());
+            pstmt.setInt(7, evento.getCupos());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -40,8 +50,9 @@ public class AccionEvento {
                 Evento evento = new Evento(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        rs.getDate("fecha"),
-                        rs.getTime("hora"),
+                        rs.getString("descripcion"),
+                        rs.getString("fecha"),
+                        rs.getString("hora"),
                         rs.getString("categoria"),
                         rs.getInt("precio"),
                         rs.getInt("cupos"));
@@ -68,8 +79,8 @@ public class AccionEvento {
         try (Connection conn = conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, evento.getNombre());
             pstmt.setString(2, evento.getDescripcion());
-            pstmt.setDate(3, evento.getFecha());
-            pstmt.setTime(4, evento.getHora());
+            pstmt.setString(3, evento.getFecha());
+            pstmt.setString(4, evento.getHora());
             pstmt.setString(5, evento.getCategoria());
             pstmt.setInt(6, evento.getPrecio());
             pstmt.setInt(7, evento.getCupos());

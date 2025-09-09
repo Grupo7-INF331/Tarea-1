@@ -10,9 +10,22 @@ public class Evento {
     private int precio;
     private int cupos;
 
-    public Evento(int id, String nombre, String fecha, String hora, String categoria, int precio, int cupos) {
+    public Evento(String nombre, String descripcion, String fecha, String hora, String categoria, int precio,
+            int cupos) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.cupos = cupos;
+    }
+
+    public Evento(int id, String nombre, String descripcion, String fecha, String hora, String categoria, int precio,
+            int cupos) {
         this.id = id;
         this.nombre = nombre;
+        this.descripcion = descripcion;
         this.fecha = fecha;
         this.hora = hora;
         this.categoria = categoria;
