@@ -64,4 +64,32 @@ public class Evento {
     public String getDescripcion() {
         return descripcion;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public void setCupos(int cupos) {
+        this.cupos = cupos;
+    }
 }

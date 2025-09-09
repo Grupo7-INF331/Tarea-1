@@ -11,12 +11,15 @@ public class VistaEvento {
 
     public int menu() {
         System.out.println("=== Gestión de Eventos ===");
-        System.out.println("1. Mostrar Eventos");
-        System.out.println("2. Crear Evento"); // Controlador
-        System.out.println("3. Salir");
+        System.out.println("1. Mostrar Eventos"); // -> buscador()
+        System.out.println("2. Crear Evento"); // -> pedirTodosLosDatos()
+        System.out.println("3. Ver Registro");
+        System.out.println("4. Salir");
         System.out.println("=========================\n");
         System.out.print("Seleccione una opción: ");
-        return sc.nextInt();
+        int opcion = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
+        return opcion;
     }
 
     public String pedirNombre() {
@@ -52,27 +55,33 @@ public class VistaEvento {
     public int pedirPrecio() {
         System.out.print("Ingrese el precio del evento: ");
         int precio = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
         return precio;
     }
 
     public int pedirCupos() {
         System.out.print("Ingrese los cupos del evento: ");
         int cupos = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
         return cupos;
     }
 
     public int buscador(List<String> filtros) {
         System.out.println("=== Filtros aplicados ===");
-        for (String filtro : filtros) {
-            System.out.println("- " + filtro);
+        if (filtros != null) {
+            for (String filtro : filtros) {
+                System.out.println("- " + filtro);
+            }
         }
-        System.out.println("=========================\n");
-        System.out.println("1. Aplicar filtros");
-        System.out.println("2. Buscar");
-        System.out.println("3. Salir");
+        System.out.println("=========================");
+        System.out.println("1. Añadir filtros"); // -> Pedir filtro
+        System.out.println("2. Buscar"); // -> resultados()
+        System.out.println("3. Volver"); // -> menu()
         System.out.println("=========================\n");
         System.out.print("Seleccione una opción: ");
-        return sc.nextInt();
+        int a = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
+        return a;
     }
 
     public int resultados(List<Evento> eventos) {
@@ -83,8 +92,29 @@ public class VistaEvento {
                     + " | Cupos: " + evento.getCupos());
         }
         System.out.println("=========================\n");
-        System.out.print("Seleccionar ID de evento (0 para cancelar): ");
-        return sc.nextInt();
+        System.out.print("Seleccionar ID de evento (0 para cancelar): "); // -> buscador() o eventoSeleccionado(evento)
+        int a = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
+        return a;
+    }
+
+    public int eventoSeleccionado(Evento evento) {
+        System.out.println("=== " + evento.getNombre() + " ===");
+        System.out.println(evento.getId() + ". " + evento.getNombre() + " | " + evento.getFecha() + " | "
+                + evento.getHora() + " | " + evento.getCategoria() + " | Precio: " + evento.getPrecio()
+                + " | Cupos: " + evento.getCupos());
+        System.out.println("=========================");
+        System.out.println("1. Vender entrada"); // -> (Continuar?) Cupos--
+        System.out.println("2. Devolución de entrada"); // -> (Continuar?) Cupos++
+        System.out.println("3. Editar evento");
+        System.out.println("4. Eliminar evento"); // -> eliminarEvento(id)
+        System.out.println("5. Volver");
+        System.out.println("6. Menú Principal"); // -> menu()
+        System.out.println("=========================\n");
+        System.out.print("Seleccione una opción: ");
+        int a = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
+        return a;
     }
 
     public int detallesActualización(Evento antiguo, Evento nuevo) {
@@ -131,13 +161,15 @@ public class VistaEvento {
                     break;
             }
         }
-        System.out.println("=========================\n");
-        System.out.println("1. Deshacer un cambio");
-        System.out.println("2. Cancelar cambios");
-        System.out.println("3. Confirmar cambios");
+        System.out.println("=========================");
+        System.out.println("1. Agregar otro cambio");
+        System.out.println("2. Confirmar cambios"); // -> eventoSeleccionado(evento)
+        System.out.println("3. Cancelar cambios");
         System.out.println("=========================\n");
         System.out.print("Seleccione una opción: ");
-        return sc.nextInt();
+        int a = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
+        return a;
     }
 
     public int cambios() {
@@ -152,7 +184,15 @@ public class VistaEvento {
         System.out.println("8. Volver");
         System.out.println("=========================\n");
         System.out.print("Seleccione una opción: ");
-        return sc.nextInt();
+        int a = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
+        return a;
+    }
+
+    public boolean confirmar() {
+        System.out.print("¿Seguro/a que desea realizar esta acción? (s/n): ");
+        char respuesta = sc.next().toLowerCase().charAt(0);
+        return respuesta == 's';
     }
 
 }
