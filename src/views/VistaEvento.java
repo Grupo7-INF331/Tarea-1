@@ -172,23 +172,38 @@ public class VistaEvento {
     }
 
     public int buscador(List<String> filtros) {
-        System.out.println("=== Filtros aplicados ===");
-        if (filtros != null) {
-            for (String filtro : filtros) {
-                System.out.println("- " + filtro);
-            }
-        }
-        System.out.println("=========================");
-        System.out.println("1. Añadir filtros"); // -> Pedir filtro
-        System.out.println("2. Aplicar filtros"); // -> resultados()
-        System.out.println("3. Limpiar filtros"); // -> limpiarFiltros()
-        System.out.println("4. Volver"); // -> menu()
         System.out.println("=========================\n");
-        System.out.print("Seleccione una opción: ");
-        int a = sc.nextInt();
-        sc.nextLine(); // Limpiar buffer
-        System.out.println();
-        return a;
+        int opcion = 0;
+        boolean valid = false;
+        while (!valid) {
+            try {
+                System.out.println("=== Filtros aplicados ===");
+                if (filtros != null) {
+                    for (String filtro : filtros) {
+                        System.out.println("- " + filtro);
+                    }
+                }
+                System.out.println("=== Buscador de Eventos ===");
+                System.out.println("1. Añadir filtros"); // -> Pedir filtro
+                System.out.println("2. Aplicar filtros"); // -> resultados()
+                System.out.println("3. Limpiar filtros"); // -> limpiarFiltros()
+                System.out.println("4. Volver"); // -> menu()
+                System.out.println("=========================\n");
+                System.out.print("Seleccione una opción: ");
+                opcion = sc.nextInt();
+                sc.nextLine(); // Limpiar buffer
+                if (opcion < 1 || opcion > 4) {
+                    System.out.println("Opción no válida. Intente de nuevo.\n");
+                } else {
+                    valid = true;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Debe ser un número entero.\n");
+                sc.nextLine(); // limpiar buffer
+            }
+            System.out.println();
+        }
+        return opcion;
     }
 
     public int filtrador() {
