@@ -153,7 +153,6 @@ public class ControladorEvento {
                     Usuario usuario = vista.pedir_usuario();
                     int queryRes = gestionarUsuario.existeUsuario(usuario);
                     if(queryRes == 1){this.user = usuario;}
-                    System.out.println(gestionarUsuario.queDiceConsola(queryRes));
                     continue;
                 }
                 res = eventoHandler(res);
@@ -183,7 +182,6 @@ public class ControladorEvento {
                         Usuario usuario = vista.pedir_usuario();
                         int queryRes = gestionarUsuario.existeUsuario(usuario);
                         if(queryRes == 1){this.user = usuario;}
-                        System.out.println(gestionarUsuario.queDiceConsola(queryRes));
                         continue;
                     }
                     String nombre = vista.pedirNombre();

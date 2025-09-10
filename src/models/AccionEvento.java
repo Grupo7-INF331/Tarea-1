@@ -1,5 +1,8 @@
 package models;
 
+import controllers.ControladorEvento;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +13,7 @@ public class AccionEvento {
     private final String URL = "jdbc:mysql://localhost:3307/tarea1?serverTimezone=UTC";
     private final String USER = "root";
     private final String PASSWORD = "root123";
-
+        private static final Logger logger = Log.getLogger(ControladorEvento.class);
     private Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
@@ -36,7 +39,7 @@ public class AccionEvento {
             pstmt.setInt(7, evento.getCupos());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -59,7 +62,7 @@ public class AccionEvento {
                 eventos.add(evento);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return eventos;
     }
@@ -82,7 +85,7 @@ public class AccionEvento {
                         rs.getInt("cupos"));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return evento;
     }
@@ -93,7 +96,7 @@ public class AccionEvento {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -118,7 +121,7 @@ public class AccionEvento {
             pstmt.setInt(8, evento.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 

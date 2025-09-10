@@ -1,10 +1,9 @@
 package views;
 
-import models.Evento;
-import models.Usuario;
-
 import java.util.List;
 import java.util.Scanner;
+import models.Evento;
+import models.Usuario;
 
 public class VistaEvento {
 

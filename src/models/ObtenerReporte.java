@@ -1,7 +1,11 @@
 package models;
 
+import controllers.ControladorEvento;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,6 +15,7 @@ public class ObtenerReporte {
     private final String URL = "jdbc:mysql://localhost:3307/tarea1?serverTimezone=UTC";
     private final String USER = "root";
     private final String PASSWORD = "root123";
+    private static final Logger logger = Log.getLogger(ControladorEvento.class);
 
     public ObtenerReporte(){}
 
@@ -54,7 +59,7 @@ public class ObtenerReporte {
 
             rs.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
 
 
@@ -62,14 +67,17 @@ public class ObtenerReporte {
     }
 
     private List<Evento> filtrarEventoHora(List<Evento> eventos){
+        LocalDate hoy = LocalDate.now();
         LocalTime ahora = LocalTime.now();
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter fmtHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter fmtFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         eventos.removeIf(evento -> {
             String hora = evento.getHora();
-            LocalTime hora_evento = LocalTime.parse(hora, fmt);
-            return hora_evento.isBefore(ahora);
+            LocalDate fechaEvento = LocalDate.parse(evento.getFecha(), fmtFecha);
+            LocalTime horaEvento = LocalTime.parse(evento.getHora(), fmtHora);
+            return fechaEvento.equals(hoy) && horaEvento.isBefore(ahora);
         });
         return eventos;
     }

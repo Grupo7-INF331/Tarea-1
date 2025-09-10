@@ -5,8 +5,5 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <excluded>
-      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-j-9.4.0.jar!/" />
-    </excluded>
   </library>
 </component>
