@@ -1,0 +1,26 @@
+name: Notificaciones a Slack
+
+on:
+  push:          # Para commits en cualquier rama
+    branches: ["*"]
+  pull_request:  # Para PRs abiertos y cerrados
+    types: [opened, closed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar mensaje a Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            MSG="📦 Nuevo commit en *${{ github.ref_name }}* por ${{ github.actor }} en ${{ github.repository }}"
+          elif [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.action }}" = "opened" ]; then
+            MSG="🚀 Nuevo PR #${{ github.event.pull_request.number }}: *${{ github.event.pull_request.title }}* por ${{ github.actor }}"
+          elif [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.pull_request.merged }}" = "true" ]; then
+            MSG="🎉 Merge realizado: *${{ github.event.pull_request.head.ref }}* → *${{ github.event.pull_request.base.ref }}* por ${{ github.actor }}"
+          fi
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\"}" \
+            $SLACK_WEBHOOK_URL
