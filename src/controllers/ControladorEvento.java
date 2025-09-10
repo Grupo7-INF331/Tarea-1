@@ -132,7 +132,7 @@ public class ControladorEvento {
                     if (vista.confirmar()) {
                         modelo.eliminarEvento(id);
                         System.out.println("Evento eliminado exitosamente.");
-                        accion = 6;
+                        accion = 5;
                         id = 0;
                     } else {
                         System.out.println("Operación cancelada.");
