@@ -4,9 +4,9 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 
 public class GestionarUsuario {
-    private final String URL = "jdbc:mysql://localhost:3307/tarea1?serverTimezone=UTC";
+    private final String URL = "jdbc:mysql://localhost:3306/tarea1?serverTimezone=UTC";
     private final String USER = "root";
-    private final String PASSWORD = "root123";
+    private final String PASSWORD = "";
     private static final Logger logger = Log.getLogger(GestionarUsuario.class);
 
     private Connection conectar() throws SQLException {
@@ -14,6 +14,7 @@ public class GestionarUsuario {
     }
 
     public int existeUsuario(Usuario user) {
+        System.out.println(user.getUser() + " " + user.getPassword());
         String sql = "SELECT * FROM usuarios WHERE user = ? AND password = ?";
 
         if (user.getUser().length() > 50 || user.getPassword().length() > 255)
@@ -36,13 +37,13 @@ public class GestionarUsuario {
 
     public int queDiceConsola(int i) {
         if (i == 1) {
-            logger.info("Iniciando Sesión");
+            logger.info("Iniciando Sesion");
             return 1;
         } else if (i == 0)
-            logger.warn("No se encontro el usuario y/o la contraseña");
+            logger.warn("No se encontro el usuario y/o la contrasena");
 
         else
-            logger.error("Solo se permite un maximo de 50 caracteres para el usuario y 255 para la contraseña");
+            logger.error("Solo se permite un maximo de 50 caracteres para el usuario y 255 para la contrasena");
         return 0;
     }
 }
