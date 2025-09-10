@@ -231,8 +231,7 @@ public class VistaEvento {
                 System.out.println("2. Devolución de entrada"); // -> (Continuar?) Cupos++
                 System.out.println("3. Editar evento");
                 System.out.println("4. Eliminar evento"); // -> eliminarEvento(id)
-                System.out.println("5. Volver");
-                System.out.println("6. Menú Principal"); // -> menu()
+                System.out.println("5. Menú Principal"); // -> menu()
                 System.out.println("=========================\n");
                 System.out.print("Seleccione una opción: ");
                 a = sc.nextInt();
@@ -302,7 +301,7 @@ public class VistaEvento {
         while (!valid) {
             try {
                 System.out.println("=========================");
-                System.out.println("1. Realizar otro cambio"); // -> nuevoCambio(nuevo)
+                System.out.println("1. Realizar un nuevo cambio"); // -> nuevoCambio(nuevo)
                 System.out.println("2. Confirmar cambios"); // -> eventoSeleccionado(evento)
                 System.out.println("3. Cancelar cambios");
                 System.out.println("=========================\n");

@@ -59,8 +59,9 @@ public class ControladorEvento {
         return evento;
     }
 
-    public void updateHandler(Evento antiguo) throws ParseException {
-        Evento nuevo = antiguo;
+    public Evento updateHandler(Evento antiguo) throws ParseException {
+        Evento nuevo = new Evento(antiguo.getId(), antiguo.getNombre(), antiguo.getDescripcion(), antiguo.getFecha(),
+                antiguo.getHora(), antiguo.getCategoria(), antiguo.getPrecio(), antiguo.getCupos());
         int opcion;
         do {
             opcion = vista.detallesActualización(antiguo, nuevo);
@@ -73,7 +74,9 @@ public class ControladorEvento {
                     if (vista.confirmar()) {
                         modelo.actualizarEvento(nuevo);
                         System.out.println("Cambios guardados exitosamente.");
-                        opcion = 4;
+                        antiguo = new Evento(nuevo.getId(), nuevo.getNombre(), nuevo.getDescripcion(), nuevo.getFecha(),
+                                nuevo.getHora(), nuevo.getCategoria(), nuevo.getPrecio(), nuevo.getCupos());
+                        opcion = 3;
                     } else {
                         System.out.println("Operación cancelada.");
                     }
@@ -86,6 +89,7 @@ public class ControladorEvento {
                     break;
             }
         } while (opcion != 3);
+        return nuevo;
     }
 
     public int eventoHandler(int id) throws ParseException {
@@ -113,7 +117,7 @@ public class ControladorEvento {
                     }
                     break;
                 case 3:
-                    updateHandler(evento);
+                    evento = updateHandler(evento);
                     break;
                 case 4:
                     if (vista.confirmar()) {
@@ -126,15 +130,13 @@ public class ControladorEvento {
                     }
                     break;
                 case 5:
-                    break;
-                case 6:
                     id = 0;
                     break;
                 default:
                     System.out.println("Opción no válida.");
             }
 
-        } while (accion != 6 && accion != 5);
+        } while (accion != 5);
         return id;
     }
 
