@@ -17,8 +17,8 @@ public class ObtenerReporte {
     private final String PASSWORD = "root123";
     private static final Logger logger = Log.getLogger(ControladorEvento.class);
 
-    public ObtenerReporte(){}
-
+    public ObtenerReporte() {
+    }
 
     private Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -29,20 +29,17 @@ public class ObtenerReporte {
 
         java.util.Date now = new java.util.Date();
 
-
         SimpleDateFormat formato_fecha_sql = new SimpleDateFormat("yyyy-MM-dd"); // formato SQL
         String fecha_sql = formato_fecha_sql.format(now);
-
 
         List<Evento> eventos = new ArrayList<>();
         Evento evento = null;
         try (Connection conn = conectar();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, fecha_sql);
 
             ResultSet rs = stmt.executeQuery();
-
 
             while (rs.next()) {
                 evento = new Evento(
@@ -62,11 +59,10 @@ public class ObtenerReporte {
             logger.error(e.getMessage());
         }
 
-
         return filtrarEventoHora(eventos);
     }
 
-    private List<Evento> filtrarEventoHora(List<Evento> eventos){
+    private List<Evento> filtrarEventoHora(List<Evento> eventos) {
         LocalDate hoy = LocalDate.now();
         LocalTime ahora = LocalTime.now();
 
@@ -74,7 +70,6 @@ public class ObtenerReporte {
         DateTimeFormatter fmtFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         eventos.removeIf(evento -> {
-            String hora = evento.getHora();
             LocalDate fechaEvento = LocalDate.parse(evento.getFecha(), fmtFecha);
             LocalTime horaEvento = LocalTime.parse(evento.getHora(), fmtHora);
             return fechaEvento.equals(hoy) && horaEvento.isBefore(ahora);
@@ -82,7 +77,7 @@ public class ObtenerReporte {
         return eventos;
     }
 
-    public Reportes obtenerReportes(){
+    public Reportes obtenerReportes() {
 
         List<Evento> eventos = obtenerTodosReporte();
         int total_eventos = eventos.size();
@@ -91,9 +86,10 @@ public class ObtenerReporte {
         for (Evento evento : eventos) {
             int cupos = evento.getCupos();
             cupos_disponibles += cupos;
-            if (cupos == 0) eventos_agotados++;
+            if (cupos == 0)
+                eventos_agotados++;
 
         }
-        return new Reportes(total_eventos,cupos_disponibles,eventos_agotados);
+        return new Reportes(total_eventos, cupos_disponibles, eventos_agotados);
     }
 }
