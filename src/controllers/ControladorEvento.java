@@ -139,16 +139,36 @@ public class ControladorEvento {
     }
 
     public void seleccionEventoHandler(List<Evento> eventos) throws ParseException {
-        int res;
-        do {
-            res = vista.resultados(eventos);
-            if (res > 0) {
-                res = eventoHandler(res);
-            } else if (res < 0) {
-                System.out.println("Opción no válida, intente de nuevo.");
+        while (true) {
+            int idSeleccionado = vista.resultados(eventos);
+
+            if (idSeleccionado == 0) {
+                System.out.println("Operación cancelada.");
+                return; // salir sin seleccionar
             }
 
-        } while (res != 0);
+            // Buscar evento por ID
+            Evento seleccionado = null;
+            for (Evento e : eventos) {
+                if (e.getId() == idSeleccionado) {
+                    seleccionado = e;
+                    break;
+                }
+            }
+
+            if (seleccionado == null) {
+                System.out.println("No existe un evento con ese ID. Intente de nuevo.\n");
+                continue; // volver a pedir ID
+            }
+
+            // Evento válido encontrado → manejarlo
+            int result = eventoHandler(seleccionado.getId());
+
+            if (result == 0) {
+                // Evento eliminado o usuario salió del menú del evento
+                return;
+            }
+        }
     }
 
     public void iniciar() throws ParseException {
@@ -158,6 +178,10 @@ public class ControladorEvento {
             switch (opcion) {
                 case 1:
                     List<Evento> eventos = modelo.obtenerEventos();
+                    if (eventos.isEmpty()) {
+                        System.out.println("No hay eventos disponibles.\n");
+                        break;
+                    }
                     // Falta colocar el buscador/filtros, estamos asumiendo
                     // que no existe un buscador de momento
                     seleccionEventoHandler(eventos);

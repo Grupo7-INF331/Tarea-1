@@ -46,13 +46,21 @@ public class AccionEvento {
         try (Connection conn = conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
+
+                String fecha = rs.getString("fecha");
+                String hora = rs.getString("hora");
+
+                fecha = fecha.substring(8, 10) + "-" + fecha.substring(5, 7) + "-" + fecha.substring(0, 4);
+                hora = hora.substring(0, 5);
+
                 Evento evento = new Evento(
                         rs.getInt("id"),
                         rs.getString("nombre"),
                         rs.getString("descripcion"),
-                        rs.getString("fecha"),
-                        rs.getString("hora"),
+                        fecha,
+                        hora,
                         rs.getString("categoria"),
                         rs.getInt("precio"),
                         rs.getInt("cupos"));
@@ -68,15 +76,22 @@ public class AccionEvento {
         String sql = "SELECT * FROM eventos WHERE id = ?";
         Evento evento = null;
         try (Connection conn = conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
+                String fecha = rs.getString("fecha");
+                String hora = rs.getString("hora");
+
+                fecha = fecha.substring(8, 10) + "-" + fecha.substring(5, 7) + "-" + fecha.substring(0, 4);
+                hora = hora.substring(0, 5);
+
                 evento = new Evento(
                         rs.getInt("id"),
                         rs.getString("nombre"),
                         rs.getString("descripcion"),
-                        rs.getString("fecha"),
-                        rs.getString("hora"),
+                        fecha,
+                        hora,
                         rs.getString("categoria"),
                         rs.getInt("precio"),
                         rs.getInt("cupos"));
