@@ -174,7 +174,8 @@ public class ControladorEvento {
             if (user == null) {
                 Usuario usuario = vista.pedir_usuario();
                 int queryRes = gestionarUsuario.existeUsuario(usuario);
-                if (queryRes == 1) {
+                int res = gestionarUsuario.queDiceConsola(queryRes);
+                if (res == 1) {
                     this.user = usuario;
                 }
                 continue;

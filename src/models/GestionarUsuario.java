@@ -14,7 +14,6 @@ public class GestionarUsuario {
     }
 
     public int existeUsuario(Usuario user) {
-        System.out.println(user.getUser() + " " + user.getPassword());
         String sql = "SELECT * FROM usuarios WHERE user = ? AND password = ?";
 
         if (user.getUser().length() > 50 || user.getPassword().length() > 255)
@@ -37,13 +36,13 @@ public class GestionarUsuario {
 
     public int queDiceConsola(int i) {
         if (i == 1) {
-            logger.info("Iniciando Sesion");
+            logger.info("Iniciando Sesion\n");
             return 1;
         } else if (i == 0)
-            logger.warn("No se encontro el usuario y/o la contrasena");
+            logger.warn("No se encontro el usuario y/o la contrasena\n");
 
         else
-            logger.error("Solo se permite un maximo de 50 caracteres para el usuario y 255 para la contrasena");
+            logger.error("Solo se permite un maximo de 50 caracteres para el usuario y 255 para la contrasena\n");
         return 0;
     }
 }
