@@ -180,14 +180,42 @@ public class VistaEvento {
         }
         System.out.println("=========================");
         System.out.println("1. Añadir filtros"); // -> Pedir filtro
-        System.out.println("2. Buscar"); // -> resultados()
-        System.out.println("3. Volver"); // -> menu()
+        System.out.println("2. Aplicar filtros"); // -> resultados()
+        System.out.println("3. Limpiar filtros"); // -> limpiarFiltros()
+        System.out.println("4. Volver"); // -> menu()
         System.out.println("=========================\n");
         System.out.print("Seleccione una opción: ");
         int a = sc.nextInt();
         sc.nextLine(); // Limpiar buffer
         System.out.println();
         return a;
+    }
+
+    public int filtrador() {
+        int opcion = 0;
+        boolean valid = false;
+        while (!valid) {
+            try {
+                System.out.println("=== Filtros disponibles ===");
+                System.out.println("1. Nombre");
+                System.out.println("2. Categoría");
+                System.out.println("3. Intervalo de fechas");
+                System.out.println("4. Rango de precio");
+                System.out.println("5. Volver");
+                System.out.print("Seleccione una opción: ");
+                opcion = sc.nextInt();
+                sc.nextLine(); // limpiar buffer
+                if (opcion < 1 || opcion > 5) {
+                    System.out.println("Opción no válida. Intente de nuevo.\n");
+                } else {
+                    valid = true;
+                }
+            } catch (Exception e) {
+                System.out.println("Error al mostrar filtros. Intente de nuevo.");
+            }
+            System.out.println();
+        }
+        return opcion;
     }
 
     public int resultados(List<Evento> eventos) {

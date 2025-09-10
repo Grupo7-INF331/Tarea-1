@@ -1,6 +1,8 @@
 package controllers;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import models.*;
@@ -99,7 +101,7 @@ public class ControladorEvento {
             accion = vista.eventoSeleccionado(evento);
             switch (accion) {
                 case 1:
-                    if (evento.getCupos() > 1) {
+                    if (evento.getCupos() > 0) {
                         if (vista.confirmar()) {
                             evento.setCupos(evento.getCupos() - 1);
                             modelo.actualizarEvento(evento);
@@ -173,20 +175,119 @@ public class ControladorEvento {
         }
     }
 
+    public void filtradorHandler(List<String> filtros, List<Evento> eventos) throws ParseException {
+        int opcion;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        do {
+            opcion = vista.filtrador();
+            switch (opcion) {
+                case 1:
+                    if (filtros.stream().anyMatch(f -> f.startsWith("Nombre ="))) {
+                        System.out.println("El filtro de este campo ya ha sido aplicado.\n");
+                        return;
+                    }
+                    String nombre = vista.pedirNombre();
+                    filtros.add("Nombre = '" + nombre + "'");
+                    eventos.removeIf(evento -> !evento.getNombre().equalsIgnoreCase(nombre));
+                    break;
+                case 2:
+                    if (filtros.stream().anyMatch(f -> f.startsWith("Categoría ="))) {
+                        System.out.println("El filtro de este campo ya ha sido aplicado.\n");
+                        return;
+                    }
+                    String categoria = vista.pedirCategoria();
+                    filtros.add("Categoría = '" + categoria + "'");
+                    eventos.removeIf(evento -> !evento.getCategoria().equalsIgnoreCase(categoria));
+                    break;
+                case 3:
+                    if (filtros.stream().anyMatch(f -> f.startsWith("Fecha entre"))) {
+                        System.out.println("El filtro de este campo ya ha sido aplicado.\n");
+                        return;
+                    }
+                    String fechaMinStr = vista.pedirFecha();
+                    String fechaMaxStr = vista.pedirFecha();
+                    while (sdf.parse(fechaMaxStr).before(sdf.parse(fechaMinStr))) {
+                        System.out.println("La fecha máxima no puede ser anterior a la mínima. Intente de nuevo.");
+                        fechaMaxStr = vista.pedirFecha();
+                    }
+
+                    java.sql.Date fechaMin = new java.sql.Date(sdf.parse(fechaMinStr).getTime());
+                    java.sql.Date fechaMax = new java.sql.Date(sdf.parse(fechaMaxStr).getTime());
+
+                    filtros.add("Fecha entre '" + fechaMinStr + "' y '" + fechaMaxStr + "'");
+
+                    eventos.removeIf(evento -> {
+                        try {
+                            java.sql.Date fechaEvento = new java.sql.Date(sdf.parse(evento.getFecha()).getTime());
+                            return fechaEvento.before(fechaMin) || fechaEvento.after(fechaMax);
+                        } catch (ParseException e) {
+                            return true; // si no se puede parsear, lo descartamos
+                        }
+                    });
+                    break;
+                case 4:
+                    if (filtros.stream().anyMatch(f -> f.startsWith("Precio entre"))) {
+                        System.out.println("El filtro de este campo ya ha sido aplicado.\n");
+                        return;
+                    }
+                    int precioMin = vista.pedirPrecio();
+
+                    final int[] precioMax = { vista.pedirPrecio() };
+                    while (precioMax[0] < precioMin) {
+                        System.out.println("El precio máximo no puede ser menor que el mínimo. Intente de nuevo.");
+                        precioMax[0] = vista.pedirPrecio();
+                    }
+                    filtros.add("Precio entre " + precioMin + " y " + precioMax[0]);
+                    eventos.removeIf(evento -> evento.getPrecio() < precioMin || evento.getPrecio() > precioMax[0]);
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        } while (opcion != 5);
+    }
+
+    public void buscadorHandler() throws ParseException {
+        List<Evento> eventos = modelo.obtenerEventos();
+        List<String> filtros = new ArrayList<>();
+        if (eventos.isEmpty()) {
+            System.out.println("No hay eventos disponibles.\n");
+            return;
+        }
+        int opcion = 0;
+        do {
+            try {
+                opcion = vista.buscador(filtros);
+                switch (opcion) {
+                    case 1:
+                        filtradorHandler(filtros, eventos);
+                        break;
+                    case 2:
+                        seleccionEventoHandler(eventos);
+                        break;
+                    case 3:
+                        eventos = modelo.obtenerEventos();
+                        filtros.clear();
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                }
+            } catch (Exception e) {
+                System.out.println("Error al procesar la opción. Intente de nuevo.");
+            }
+        } while (opcion != 4);
+    }
+
     public void iniciar() throws ParseException {
         int opcion;
         do {
             opcion = vista.menu();
             switch (opcion) {
                 case 1:
-                    List<Evento> eventos = modelo.obtenerEventos();
-                    if (eventos.isEmpty()) {
-                        System.out.println("No hay eventos disponibles.\n");
-                        break;
-                    }
-                    // Falta colocar el buscador/filtros, estamos asumiendo
-                    // que no existe un buscador de momento
-                    seleccionEventoHandler(eventos);
+                    buscadorHandler();
                     break;
 
                 case 2:
