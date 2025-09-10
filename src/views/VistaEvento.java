@@ -1,6 +1,7 @@
 package views;
 
 import models.Evento;
+import models.Usuario;
 
 import java.util.List;
 import java.util.Scanner;
@@ -117,7 +118,7 @@ public class VistaEvento {
         return a;
     }
 
-    public int detallesActualización(Evento antiguo, Evento nuevo) {
+    public int detallesActualizacion(Evento antiguo, Evento nuevo) {
         System.out.println("=== Detalles de la actualización ===");
         for (int i = 1; i <= 7; i++) {
             switch (i) {
@@ -187,6 +188,15 @@ public class VistaEvento {
         int a = sc.nextInt();
         sc.nextLine(); // Limpiar buffer
         return a;
+    }
+
+    public Usuario pedir_usuario() {
+        System.out.println("=== Para realizar acciones necesita autentificarse ===");
+        System.out.println("1. Usuario");
+        String user = sc.nextLine();
+        System.out.println("2. Contraseña");
+        String password = sc.nextLine();
+        return new Usuario(user,password);
     }
 
     public boolean confirmar() {

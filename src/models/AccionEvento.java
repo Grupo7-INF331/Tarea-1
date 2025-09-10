@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccionEvento {
-    private final String URL = "jdbc:mysql://localhost:3306/tarea1";
+    private final String URL = "jdbc:mysql://localhost:3307/tarea1?serverTimezone=UTC";
     private final String USER = "root";
-    private final String PASSWORD = "";
+    private final String PASSWORD = "root123";
 
     private Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);

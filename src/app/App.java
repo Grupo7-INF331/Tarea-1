@@ -8,7 +8,9 @@ public class App {
     public static void main(String[] args) throws Exception {
         VistaEvento vista = new VistaEvento();
         AccionEvento modelo = new AccionEvento();
-        ControladorEvento controlador = new ControladorEvento(vista, modelo);
+        ObtenerReporte modeloRep = new ObtenerReporte();
+        GestionarUsuario gestionarUsuario = new GestionarUsuario();
+        ControladorEvento controlador = new ControladorEvento(vista, modelo,modeloRep,gestionarUsuario);
         controlador.iniciar();
     }
 }

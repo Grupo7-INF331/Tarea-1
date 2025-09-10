@@ -9,10 +9,16 @@ import views.VistaEvento;
 public class ControladorEvento {
     private final VistaEvento vista;
     private final AccionEvento modelo;
+    private  final  ObtenerReporte modeloRep;
+    private final  GestionarUsuario gestionarUsuario;
+    private Usuario user;
 
-    public ControladorEvento(VistaEvento vista, AccionEvento modelo) {
+    public ControladorEvento(VistaEvento vista, AccionEvento modelo, ObtenerReporte modeloRep,GestionarUsuario gestionarUsuario) {
         this.vista = vista;
         this.modelo = modelo;
+        this.modeloRep = modeloRep;
+        this.gestionarUsuario = gestionarUsuario;
+        this.user = null;
     }
 
     public Evento nuevoCambio(Evento evento) {
@@ -63,7 +69,7 @@ public class ControladorEvento {
         Evento nuevo = antiguo;
         int opcion;
         do {
-            opcion = vista.detallesActualización(antiguo, nuevo);
+            opcion = vista.detallesActualizacion(antiguo, nuevo);
             switch (opcion) {
                 case 1:
                     nuevo = nuevoCambio(nuevo);
@@ -143,7 +149,16 @@ public class ControladorEvento {
         do {
             res = vista.resultados(eventos);
             if (res > 0) {
+                if(user == null){
+                    Usuario usuario = vista.pedir_usuario();
+                    int queryRes = gestionarUsuario.existeUsuario(usuario);
+                    if(queryRes == 1){this.user = usuario;}
+                    System.out.println(gestionarUsuario.queDiceConsola(queryRes));
+                    continue;
+                }
                 res = eventoHandler(res);
+
+
             } else if (res < 0) {
                 System.out.println("Opción no válida, intente de nuevo.");
             }
@@ -164,6 +179,13 @@ public class ControladorEvento {
                     break;
 
                 case 2:
+                    if(user == null){
+                        Usuario usuario = vista.pedir_usuario();
+                        int queryRes = gestionarUsuario.existeUsuario(usuario);
+                        if(queryRes == 1){this.user = usuario;}
+                        System.out.println(gestionarUsuario.queDiceConsola(queryRes));
+                        continue;
+                    }
                     String nombre = vista.pedirNombre();
                     String descripcion = vista.pedirDescripcion();
                     String fecha = vista.pedirFecha();
@@ -175,7 +197,13 @@ public class ControladorEvento {
                     modelo.insertarEvento(nuevoEvento);
                     break;
                 case 3:
-                    // verRegistro();
+                    Reportes reporte = modeloRep.obtenerReportes();
+
+                    System.out.println("Reporte de los eventos:" + "\n" +
+                            "Total eventos Registrados: "+ reporte.getTotal_eventos_registrados() + "\n" +
+                            "Total cupos en todos los eventos: " + reporte.getCupos_disponibles() + "\n" +
+                            "Eventos agotados: "+ reporte.getEventos_agotados() + "\n"
+                    );
                     break;
                 case 4:
                     System.out.println("Saliendo...");
