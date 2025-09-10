@@ -2,7 +2,7 @@ name: Notificaciones a Slack
 
 on:
   push:          # Para commits en cualquier rama
-    branches: ["*"]
+    branches: '**'
   pull_request:  # Para PRs abiertos y cerrados
     types: [opened, closed]
 
