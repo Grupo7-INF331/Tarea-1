@@ -1,21 +1,31 @@
 package models;
 
-import java.sql.Date;
-import java.sql.Time;
-
 public class Evento {
     private int id;
     private String nombre;
     private String descripcion;
-    private Date fecha;
-    private Time hora;
+    private String fecha;
+    private String hora;
     private String categoria;
     private int precio;
     private int cupos;
 
-    public Evento(int id, String nombre, Date fecha, Time hora, String categoria, int precio, int cupos) {
+    public Evento(String nombre, String descripcion, String fecha, String hora, String categoria, int precio,
+            int cupos) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.cupos = cupos;
+    }
+
+    public Evento(int id, String nombre, String descripcion, String fecha, String hora, String categoria, int precio,
+            int cupos) {
         this.id = id;
         this.nombre = nombre;
+        this.descripcion = descripcion;
         this.fecha = fecha;
         this.hora = hora;
         this.categoria = categoria;
@@ -31,11 +41,11 @@ public class Evento {
         return nombre;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
@@ -53,5 +63,33 @@ public class Evento {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public void setCupos(int cupos) {
+        this.cupos = cupos;
     }
 }
