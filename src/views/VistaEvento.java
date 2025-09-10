@@ -202,6 +202,7 @@ public class VistaEvento {
                 System.out.println("3. Intervalo de fechas");
                 System.out.println("4. Rango de precio");
                 System.out.println("5. Volver");
+                System.out.println("=========================\n");
                 System.out.print("Seleccione una opción: ");
                 opcion = sc.nextInt();
                 sc.nextLine(); // limpiar buffer
@@ -212,6 +213,7 @@ public class VistaEvento {
                 }
             } catch (Exception e) {
                 System.out.println("Error al mostrar filtros. Intente de nuevo.");
+                sc.nextLine(); // limpiar buffer
             }
             System.out.println();
         }

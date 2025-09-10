@@ -188,8 +188,8 @@ public class ControladorEvento {
                     }
                     String nombre = vista.pedirNombre();
                     filtros.add("Nombre = '" + nombre + "'");
-                    eventos.removeIf(evento -> !evento.getNombre().equalsIgnoreCase(nombre));
-                    break;
+                    eventos.removeIf(evento -> !evento.getNombre().toLowerCase().contains(nombre.toLowerCase()));
+                    return;
                 case 2:
                     if (filtros.stream().anyMatch(f -> f.startsWith("Categoría ="))) {
                         System.out.println("El filtro de este campo ya ha sido aplicado.\n");
@@ -198,13 +198,15 @@ public class ControladorEvento {
                     String categoria = vista.pedirCategoria();
                     filtros.add("Categoría = '" + categoria + "'");
                     eventos.removeIf(evento -> !evento.getCategoria().equalsIgnoreCase(categoria));
-                    break;
+                    return;
                 case 3:
                     if (filtros.stream().anyMatch(f -> f.startsWith("Fecha entre"))) {
                         System.out.println("El filtro de este campo ya ha sido aplicado.\n");
                         return;
                     }
+                    System.out.println("Fecha mínima");
                     String fechaMinStr = vista.pedirFecha();
+                    System.out.println("Fecha máxima");
                     String fechaMaxStr = vista.pedirFecha();
                     while (sdf.parse(fechaMaxStr).before(sdf.parse(fechaMinStr))) {
                         System.out.println("La fecha máxima no puede ser anterior a la mínima. Intente de nuevo.");
@@ -224,14 +226,16 @@ public class ControladorEvento {
                             return true; // si no se puede parsear, lo descartamos
                         }
                     });
-                    break;
+                    return;
                 case 4:
                     if (filtros.stream().anyMatch(f -> f.startsWith("Precio entre"))) {
                         System.out.println("El filtro de este campo ya ha sido aplicado.\n");
                         return;
                     }
+                    System.out.println("Precio mínimo");
                     int precioMin = vista.pedirPrecio();
 
+                    System.out.println("Precio máximo");
                     final int[] precioMax = { vista.pedirPrecio() };
                     while (precioMax[0] < precioMin) {
                         System.out.println("El precio máximo no puede ser menor que el mínimo. Intente de nuevo.");
@@ -239,7 +243,7 @@ public class ControladorEvento {
                     }
                     filtros.add("Precio entre " + precioMin + " y " + precioMax[0]);
                     eventos.removeIf(evento -> evento.getPrecio() < precioMin || evento.getPrecio() > precioMax[0]);
-                    break;
+                    return;
                 case 5:
                     return;
                 default:
