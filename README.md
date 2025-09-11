@@ -65,7 +65,7 @@ Proyecto desarrollado en **Java** con **MySQL**.
 1. **Fork** este repositorio.  
 2. **Clona** tu fork en tu máquina local:  
    ```bash
-   git clone [https://github.com/tu-usuario/nombre-repo.git](https://github.com/Grupo7-INF331/Tarea-1.git)
+   git clone https://github.com/Grupo7-INF331/Tarea-1.git
 ---
 
 3. Crea una branch y subela al github
