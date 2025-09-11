@@ -1,11 +1,11 @@
 package views;
 
-import models.Evento;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import models.Evento;
 import models.Usuario;
 
 public class VistaEvento {
@@ -17,22 +17,22 @@ public class VistaEvento {
         boolean valid = false;
         while (!valid) {
             try {
-                System.out.println("=== Gestión de Eventos ===");
+                System.out.println("=== Gestion de Eventos ===");
                 System.out.println("1. Mostrar Eventos"); // -> buscador()
                 System.out.println("2. Crear Evento"); // -> pedirTodosLosDatos()
                 System.out.println("3. Ver Registro");
                 System.out.println("4. Salir");
                 System.out.println("=========================\n");
-                System.out.print("Seleccione una opción: ");
+                System.out.print("Seleccione una opcion: ");
                 opcion = sc.nextInt();
                 sc.nextLine(); // Limpiar buffer
                 if (opcion < 1 || opcion > 4) {
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println("Opcion no valida. Intente de nuevo.");
                 } else {
                     valid = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Intente de nuevo.");
+                System.out.println("Entrada no valida. Intente de nuevo.");
                 sc.nextLine(); // Limpiar buffer
             }
             System.out.println();
@@ -48,7 +48,7 @@ public class VistaEvento {
     }
 
     public String pedirDescripcion() {
-        System.out.print("Ingrese la descripción del evento: ");
+        System.out.print("Ingrese la descripcion del evento: ");
         String descripcion = sc.nextLine();
         System.out.println();
         return descripcion;
@@ -62,19 +62,19 @@ public class VistaEvento {
             System.out.print("Ingrese la fecha del evento (DD-MM-YYYY): ");
             fecha = sc.nextLine();
 
-            // Validación de formato con regex
+            // Validacion de formato con regex
             if (fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
-                // Validación de existencia real de la fecha
+                // Validacion de existencia real de la fecha
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 sdf.setLenient(false);
                 try {
                     sdf.parse(fecha);
-                    valida = true; // pasó la validación
+                    valida = true; // paso la validacion
                 } catch (ParseException e) {
                     System.out.println("La fecha no existe. Intente de nuevo.");
                 }
             } else {
-                System.out.println("Formato inválido. Use DD-MM-YYYY.");
+                System.out.println("Formato invalido. Use DD-MM-YYYY.");
             }
             System.out.println();
         }
@@ -89,19 +89,19 @@ public class VistaEvento {
             System.out.print("Ingrese la hora del evento (HH:MM): ");
             hora = sc.nextLine();
 
-            // Validación de formato con regex
+            // Validacion de formato con regex
             if (hora.matches("\\d{2}:\\d{2}")) {
-                // Validación de existencia real de la hora
+                // Validacion de existencia real de la hora
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                 sdf.setLenient(false);
                 try {
                     sdf.parse(hora);
-                    valida = true; // pasó la validación
+                    valida = true; // paso la validacion
                 } catch (ParseException e) {
                     System.out.println("La hora no existe. Intente de nuevo.");
                 }
             } else {
-                System.out.println("Formato inválido. Use HH:MM.");
+                System.out.println("Formato invalido. Use HH:MM.");
             }
             System.out.println();
         }
@@ -113,14 +113,14 @@ public class VistaEvento {
         boolean valida = false;
 
         while (!valida) {
-            System.out.print("Ingrese la categoría del evento (charla, show, taller): ");
+            System.out.print("Ingrese la categoria del evento (charla, show, taller): ");
             categoria = sc.nextLine().toLowerCase();
 
-            // Validación de categoría no vacía
+            // Validacion de categoria no vacia
             if (categoria.equals("charla") || categoria.equals("show") || categoria.equals("taller")) {
-                valida = true; // pasó la validación
+                valida = true; // paso la validacion
             } else {
-                System.out.println("Categoría no válida. Intente de nuevo.");
+                System.out.println("Categoria no valida. Intente de nuevo.");
             }
             System.out.println();
         }
@@ -141,7 +141,7 @@ public class VistaEvento {
                     valid = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Precio inválido. Intente de nuevo.");
+                System.out.println("Precio invalido. Intente de nuevo.");
                 sc.nextLine(); // Limpiar buffer
             }
             System.out.println();
@@ -163,7 +163,7 @@ public class VistaEvento {
                     valid = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Cupos inválidos. Intente de nuevo.");
+                System.out.println("Cupos invalidos. Intente de nuevo.");
                 sc.nextLine(); // Limpiar buffer
             }
             System.out.println();
@@ -184,21 +184,21 @@ public class VistaEvento {
                     }
                 }
                 System.out.println("=== Buscador de Eventos ===");
-                System.out.println("1. Añadir filtros"); // -> Pedir filtro
+                System.out.println("1. Agregar filtros"); // -> Pedir filtro
                 System.out.println("2. Aplicar filtros"); // -> resultados()
                 System.out.println("3. Limpiar filtros"); // -> limpiarFiltros()
                 System.out.println("4. Volver"); // -> menu()
                 System.out.println("=========================\n");
-                System.out.print("Seleccione una opción: ");
+                System.out.print("Seleccione una opcion: ");
                 opcion = sc.nextInt();
                 sc.nextLine(); // Limpiar buffer
                 if (opcion < 1 || opcion > 4) {
-                    System.out.println("Opción no válida. Intente de nuevo.\n");
+                    System.out.println("Opcion no valida. Intente de nuevo.\n");
                 } else {
                     valid = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Debe ser un número entero.\n");
+                System.out.println("Entrada invalida. Debe ser un numero entero.\n");
                 sc.nextLine(); // limpiar buffer
             }
             System.out.println();
@@ -213,16 +213,16 @@ public class VistaEvento {
             try {
                 System.out.println("=== Filtros disponibles ===");
                 System.out.println("1. Nombre");
-                System.out.println("2. Categoría");
+                System.out.println("2. Categoria");
                 System.out.println("3. Intervalo de fechas");
                 System.out.println("4. Rango de precio");
                 System.out.println("5. Volver");
                 System.out.println("=========================\n");
-                System.out.print("Seleccione una opción: ");
+                System.out.print("Seleccione una opcion: ");
                 opcion = sc.nextInt();
                 sc.nextLine(); // limpiar buffer
                 if (opcion < 1 || opcion > 5) {
-                    System.out.println("Opción no válida. Intente de nuevo.\n");
+                    System.out.println("Opcion no valida. Intente de nuevo.\n");
                 } else {
                     valid = true;
                 }
@@ -254,8 +254,8 @@ public class VistaEvento {
                 sc.nextLine(); // limpiar buffer
                 valido = true;
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Debe ser un número entero.\n");
-                sc.nextLine(); // descartar la entrada errónea
+                System.out.println("Entrada invalida. Debe ser un numero entero.\n");
+                sc.nextLine(); // descartar la entrada erronea
             }
         }
         System.out.println();
@@ -273,21 +273,21 @@ public class VistaEvento {
                         + " | Cupos: " + evento.getCupos());
                 System.out.println("=========================");
                 System.out.println("1. Vender entrada"); // -> (Continuar?) Cupos--
-                System.out.println("2. Devolución de entrada"); // -> (Continuar?) Cupos++
+                System.out.println("2. Devolucion de entrada"); // -> (Continuar?) Cupos++
                 System.out.println("3. Editar evento");
                 System.out.println("4. Eliminar evento"); // -> eliminarEvento(id)
-                System.out.println("5. Menú Principal"); // -> menu()
+                System.out.println("5. Menu Principal"); // -> menu()
                 System.out.println("=========================\n");
-                System.out.print("Seleccione una opción: ");
+                System.out.print("Seleccione una opcion: ");
                 a = sc.nextInt();
                 sc.nextLine(); // Limpiar buffer
                 if (a < 1 || a > 6) {
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println("Opcion no valida. Intente de nuevo.");
                 } else {
                     valid = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Intente de nuevo.");
+                System.out.println("Entrada no valida. Intente de nuevo.");
                 sc.nextLine(); // Limpiar buffer
                 continue;
             }
@@ -298,7 +298,7 @@ public class VistaEvento {
     }
 
     public int detallesActualizacion(Evento antiguo, Evento nuevo) {
-        System.out.println("=== Detalles de la actualización ===");
+        System.out.println("=== Detalles de la actualizacion ===");
         for (int i = 1; i <= 7; i++) {
             switch (i) {
                 case 1:
@@ -309,7 +309,7 @@ public class VistaEvento {
                 case 2:
                     if (!antiguo.getDescripcion().equals(nuevo.getDescripcion())) {
                         System.out
-                                .println("Descripción: " + antiguo.getDescripcion() + " -> " + nuevo.getDescripcion());
+                                .println("Descripcion: " + antiguo.getDescripcion() + " -> " + nuevo.getDescripcion());
                     }
                     break;
                 case 3:
@@ -324,7 +324,7 @@ public class VistaEvento {
                     break;
                 case 5:
                     if (!antiguo.getCategoria().equals(nuevo.getCategoria())) {
-                        System.out.println("Categoría: " + antiguo.getCategoria() + " -> " + nuevo.getCategoria());
+                        System.out.println("Categoria: " + antiguo.getCategoria() + " -> " + nuevo.getCategoria());
                     }
                     break;
                 case 6:
@@ -350,16 +350,16 @@ public class VistaEvento {
                 System.out.println("2. Confirmar cambios"); // -> eventoSeleccionado(evento)
                 System.out.println("3. Cancelar cambios");
                 System.out.println("=========================\n");
-                System.out.print("Seleccione una opción: ");
+                System.out.print("Seleccione una opcion: ");
                 a = sc.nextInt();
                 sc.nextLine(); // Limpiar buffer
                 if (a < 1 || a > 3) {
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println("Opcion no valida. Intente de nuevo.");
                 } else {
                     valid = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Intente de nuevo.");
+                System.out.println("Entrada no valida. Intente de nuevo.");
                 sc.nextLine(); // Limpiar buffer
             }
             System.out.println();
@@ -368,12 +368,12 @@ public class VistaEvento {
     }
 
     public int cambios() {
-        System.out.println("=== ¿Qué desea cambiar? ===");
+        System.out.println("=== ¿Que desea cambiar? ===");
         System.out.println("1. Nombre");
-        System.out.println("2. Descripción");
+        System.out.println("2. Descripcion");
         System.out.println("3. Fecha");
         System.out.println("4. Hora");
-        System.out.println("5. Categoría");
+        System.out.println("5. Categoria");
         System.out.println("6. Precio");
         System.out.println("7. Cupos");
         System.out.println("8. Volver");
@@ -383,16 +383,16 @@ public class VistaEvento {
         boolean valid = false;
         while (!valid) {
             try {
-                System.out.print("Seleccione una opción: ");
+                System.out.print("Seleccione una opcion: ");
                 a = sc.nextInt();
                 sc.nextLine(); // Limpiar buffer
                 if (a < 1 || a > 8) {
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println("Opcion no valida. Intente de nuevo.");
                 } else {
                     valid = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Intente de nuevo.");
+                System.out.println("Entrada no valida. Intente de nuevo.");
                 sc.nextLine(); // Limpiar buffer
             }
             System.out.println();
@@ -401,10 +401,10 @@ public class VistaEvento {
     }
 
     public Usuario pedir_usuario() {
-        System.out.println("=== Para realizar acciones necesita autentificarse ===");
+        System.out.println("=== Para realizar esta accion necesita autentificarse ===");
         System.out.println("1. Usuario");
         String user = sc.nextLine();
-        System.out.println("2. Contraseña");
+        System.out.println("2. Contrasena");
         String password = sc.nextLine();
         return new Usuario(user, password);
     }
@@ -413,13 +413,13 @@ public class VistaEvento {
         boolean valid = false;
         char respuesta = ' ';
         while (!valid) {
-            System.out.print("¿Seguro/a que desea realizar esta acción? (s/n): ");
+            System.out.print("¿Seguro/a que desea realizar esta accion? (s/n): ");
             respuesta = sc.next().toLowerCase().charAt(0);
             if (respuesta == 's' || respuesta == 'n') {
                 valid = true;
                 return respuesta == 's';
             } else {
-                System.out.println("Entrada no válida. Intente de nuevo.");
+                System.out.println("Entrada no valida. Intente de nuevo.");
                 sc.nextLine(); // Limpiar buffer
             }
             System.out.println();

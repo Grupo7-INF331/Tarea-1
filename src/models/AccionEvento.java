@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccionEvento {
-    private final String URL = "jdbc:mysql://localhost:3306/tarea1?serverTimezone=UTC";
-    private final String USER = "root";
-    private final String PASSWORD = "";
+    private final String URL = "jdbc:mysql://localhost:3307/tarea1?serverTimezone=UTC";
+    private final String USER = "user";
+    private final String PASSWORD = "userpass";
     private static final Logger logger = Log.getLogger(ControladorEvento.class);
 
     private Connection conectar() throws SQLException {

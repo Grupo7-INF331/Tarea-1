@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import models.*;
 import views.VistaEvento;
 
@@ -60,7 +59,7 @@ public class ControladorEvento {
                 case 8:
                     break;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opcion no valida.");
             }
 
         } while (res < 1 || res > 8);
@@ -87,14 +86,14 @@ public class ControladorEvento {
                                 nuevo.getHora(), nuevo.getCategoria(), nuevo.getPrecio(), nuevo.getCupos());
                         opcion = 3;
                     } else {
-                        System.out.println("Operación cancelada.");
+                        System.out.println("Operacion cancelada.");
                     }
                     break;
                 case 3:
                     System.out.println("Cambios descartados.");
                     break;
                 case 4:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opcion no valida.");
                     break;
             }
         } while (opcion != 3);
@@ -122,7 +121,7 @@ public class ControladorEvento {
                     if (vista.confirmar()) {
                         evento.setCupos(evento.getCupos() + 1);
                         modelo.actualizarEvento(evento);
-                        System.out.println("Devolución registrada exitosamente.");
+                        System.out.println("Devolucion registrada exitosamente.");
                     }
                     break;
                 case 3:
@@ -135,14 +134,14 @@ public class ControladorEvento {
                         accion = 5;
                         id = 0;
                     } else {
-                        System.out.println("Operación cancelada.");
+                        System.out.println("Operacion cancelada.");
                     }
                     break;
                 case 5:
                     id = 0;
                     break;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opcion no valida.");
             }
 
         } while (accion != 5);
@@ -154,7 +153,7 @@ public class ControladorEvento {
             int idSeleccionado = vista.resultados(eventos);
 
             if (idSeleccionado == 0) {
-                System.out.println("Operación cancelada.");
+                System.out.println("Operacion cancelada.");
                 return; // salir sin seleccionar
             }
 
@@ -180,11 +179,11 @@ public class ControladorEvento {
                 }
                 continue;
             }
-            // Evento válido encontrado → manejarlo
+            // Evento valido encontrado → manejarlo
             int result = eventoHandler(seleccionado.getId());
 
             if (result == 0) {
-                // Evento eliminado o usuario salió del menú del evento
+                // Evento eliminado o usuario salio del menú del evento
                 return;
             }
         }
@@ -221,10 +220,10 @@ public class ControladorEvento {
                     }
                     System.out.println("Fecha mínima");
                     String fechaMinStr = vista.pedirFecha();
-                    System.out.println("Fecha máxima");
+                    System.out.println("Fecha maxima");
                     String fechaMaxStr = vista.pedirFecha();
                     while (sdf.parse(fechaMaxStr).before(sdf.parse(fechaMinStr))) {
-                        System.out.println("La fecha máxima no puede ser anterior a la mínima. Intente de nuevo.");
+                        System.out.println("La fecha maxima no puede ser anterior a la mínima. Intente de nuevo.");
                         fechaMaxStr = vista.pedirFecha();
                     }
 
@@ -250,10 +249,10 @@ public class ControladorEvento {
                     System.out.println("Precio mínimo");
                     int precioMin = vista.pedirPrecio();
 
-                    System.out.println("Precio máximo");
+                    System.out.println("Precio maximo");
                     final int[] precioMax = { vista.pedirPrecio() };
                     while (precioMax[0] < precioMin) {
-                        System.out.println("El precio máximo no puede ser menor que el mínimo. Intente de nuevo.");
+                        System.out.println("El precio maximo no puede ser menor que el mínimo. Intente de nuevo.");
                         precioMax[0] = vista.pedirPrecio();
                     }
                     filtros.add("Precio entre " + precioMin + " y " + precioMax[0]);
@@ -262,7 +261,7 @@ public class ControladorEvento {
                 case 5:
                     return;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opcion no valida.");
             }
         } while (opcion != 5);
     }
@@ -292,10 +291,10 @@ public class ControladorEvento {
                     case 4:
                         break;
                     default:
-                        System.out.println("Opción no válida.");
+                        System.out.println("Opcion no valida.");
                 }
             } catch (Exception e) {
-                System.out.println("Error al procesar la opción. Intente de nuevo.");
+                System.out.println("Error al procesar la opcion. Intente de nuevo.");
             }
         } while (opcion != 4);
     }
@@ -342,7 +341,7 @@ public class ControladorEvento {
                     System.out.println("Saliendo...");
                     break;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opcion no valida.");
                     break;
             }
         } while (opcion != 4);

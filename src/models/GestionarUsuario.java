@@ -4,9 +4,9 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 
 public class GestionarUsuario {
-    private final String URL = "jdbc:mysql://localhost:3306/tarea1?serverTimezone=UTC";
-    private final String USER = "root";
-    private final String PASSWORD = "";
+    private final String URL = "jdbc:mysql://localhost:3307/tarea1?serverTimezone=UTC";
+    private final String USER = "user";
+    private final String PASSWORD = "userpass";
     private static final Logger logger = Log.getLogger(GestionarUsuario.class);
 
     private Connection conectar() throws SQLException {
