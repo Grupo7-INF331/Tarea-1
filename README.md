@@ -74,3 +74,7 @@ Proyecto desarrollado en **Java** con **MySQL**.
 
 
 Este proyecto está bajo la licencia [MIT](LICENSE) (o la que corresponda).
+
+## Comentario acerca de GreenTest
+
+Existe un bug, cuando uno desea cambiar el nombre de una prueba. En particular, si quieres cambiar, por ejemplo, el principio del nombre del test, apenas uno escribe, el cursor se vuelve a colocar al final de la palabra.
